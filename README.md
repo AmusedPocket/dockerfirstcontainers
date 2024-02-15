@@ -1,146 +1,99 @@
-# Choose Your Branch!
+# Let's Get Started with Docker!
 
-This repo contains different versions of the starter code for **aa19-docker-first-containers**,
-with each version stored in a program-specific branch. To download or clone the
-correct branch, choose a method (`tiged`, zip, or clone) and follow the
-instructions for your specific program.
+Now that you are taking your first steps towards becoming a Docker master you'll
+start with the always traditional "HelloWorld".
 
-* [`tiged`](#tiged-the-branch)
-* [Zip](#download-the-branch-as-a-zip)
-* [Clone](#clone-the-branch)
+Before starting, ensure that Docker is installed correctly and is ready to
+accept your commands. Type the following command in a new Terminal window:
 
-## `tiged` the branch
-
-This is the most straightforward way to clone the project into a folder named
-**aa19-docker-first-containers**. In the directory where you want the project to appear, simply
-run the following command for your program and preferred authentication method:
-
-### Online Full-Time
-
-To authenticate with a Personal Access Token over HTTPS, run
-
-```sh
-npx tiged https://github.com/appacademy/aa19-docker-first-containers#full-time aa19-docker-first-containers
+```
+$ docker -v
 ```
 
-To authenticate with SSH, run
+If you get a version number and no error you are good to go!
 
-```sh
-npx tiged appacademy/aa19-docker-first-containers#full-time aa19-docker-first-containers
+## Using a container
+
+We'll start off by running a container based off the [`alpine`][alpine] image.
+Alpine is a small distribution of Linux, that you'll be talking about more in the
+future, but for now but you'll be using it for simple `echo` command.
+
+Make sure you have the Docker application running. Then use the `docker
+container run` command, with the `alpine` image, and the command to `echo "Hello
+World"`. 
+
+When you run the above command for the first time, you should see an output in
+your Terminal window similar to this:
+
+```ssh
+Unable to find image 'alpine:latest' locally
+ 
+latest: Pulling from library/alpine
+ 
+2fdfe1cd78c2: Pull complete
+ 
+Digest: sha256:ccba511b...
+ 
+Status: Downloaded newer image for alpine:latest
+ 
+Hello World
 ```
 
-### Online Part-Time
+That was easy! Let's try it again run - `docker container run alpine echo "Hello
+World"`. This time there is nothing but "Hello World" returned. That's because
+Docker now already has the image for `alpine` downloaded. You can see it using
+the `docker image ls` command. 
 
-To authenticate with a Personal Access Token over HTTPS, run
+```ssh
+REPOSITORY                              TAG                 IMAGE ID            CREATED             SIZE
+alpine                                  latest              caf27325b298        4 weeks ago         5.53MB
+```
+Now use `docker container ls` to get a list of any containers that are currently
+running. You won't see much, because there aren't any containers running.
+However you can view stopped and running containers using `docker container ls
+-a`. There you'll see:
 
-```sh
-npx tiged https://github.com/appacademy/aa19-docker-first-containers#part-time aa19-docker-first-containers
+```ssh
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                         PORTS                NAMES
+8924d558c494        alpine              "echo 'Hello World'"     3 minutes ago       Exited (0) 3 minutes ago              optimistic_chandrasekhar
 ```
 
-To authenticate with SSH, run
+The `exited` status means this container is no longer running. It's always a
+good idea to clean up containers you don't intend to use again. You can do that
+using `docker container rm <containeridORcontainername>`. Once you've cleaned up
+that container make sure it's done by checking `docker container ls -a`.
 
-```sh
-npx tiged appacademy/aa19-docker-first-containers#part-time aa19-docker-first-containers
+## Running a process inside a container
+
+Nice! Let's try doing something a little more involved with our next container.
+This time you'll use another Linux distribution,  `centos`, because it has
+`ping` built into the image.
+
+So you'll run a container based off the `centos` image, you'll have it ping 5
+times. So set up your `docker container run` with the `centos` image and then
+add the command you'd like it to run `ping -c 5 127.0.0.1`. You should see the
+container `ping` 5 times before stopping:
+
+```ssh
+PING 127.0.0.1 (127.0.0.1) 56(84) bytes of data.
+64 bytes from 127.0.0.1: icmp_seq=1 ttl=64 time=0.168 ms
+64 bytes from 127.0.0.1: icmp_seq=2 ttl=64 time=0.110 ms
+64 bytes from 127.0.0.1: icmp_seq=3 ttl=64 time=0.110 ms
+64 bytes from 127.0.0.1: icmp_seq=4 ttl=64 time=0.102 ms
+64 bytes from 127.0.0.1: icmp_seq=5 ttl=64 time=0.102 ms
+
+--- 127.0.0.1 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4130ms
+rtt min/avg/max/mdev = 0.102/0.118/0.168/0.026 ms
 ```
 
------
+Once the command the container was booted with finished, the container
+automatically stopped itself. Let's clean up the stopped containers using
+`docker container rm <containeridORcontainername>` and make sure all containers
+are removed using `docker container ls -a`.
 
-> **Note:** The first time you run `npx tiged`, you will likely be asked if you
-> want to install `tiged`. Go ahead and install it.
+Congrats on booting up your first containers - you are on your way to becoming a
+part of the Docker community!
 
-Unless you cloned the project into an already existing local git repo, run
-
-```sh
-cd aa19-docker-first-containers && git init
-```
-
-to initialize the project as a git repository that you can connect to a remote
-repo in your personal GitHub account.
-
-## Download the branch as a .zip
-
-**READ THESE INSTRUCTIONS FULLY BEFORE IMPLEMENTING THEM AS YOU WILL LOSE ACCESS
-TO THIS PAGE ONCE YOU SWITCH TO YOUR PROGRAM BRANCH.**
-
-If you want to download your branch as a __.zip__ file, click on the branch
-button to the upper-left of the file list above--the button should currently
-read "main"--and select your program from the resulting dropdown menu. This will
-take you to your program's branch. Once there, click the green "Code" button and
-select "Download ZIP" from the bottom of the menu. Move the __.zip__ to your
-desired location and unzip!
-
-Unless you unzipped the project in an already existing local git repo, run
-
-```sh
-cd aa19-docker-first-containers && git init
-```
-
-to initialize the project as a git repository that you can connect to a remote
-repo in your personal GitHub account.
-
-(To return to this page in your browser, simply select the "main" branch again.)
-
-## Clone the branch
-
-To clone the branch, open a terminal and cd into the directory where you want
-the repo to go. Then run the command specified below for your program and
-preferred authentication method:
-
-### Online Full-Time
-
-To authenticate with a Personal Access Token over HTTPS, run
-
-```sh
-git clone --branch full-time --single-branch https://github.com/appacademy/aa19-docker-first-containers.git
-```
-
-To authenticate with SSH, run
-
-```sh
-git clone --branch full-time --single-branch git@github.com:appacademy/aa19-docker-first-containers.git
-```
-
-### Online Part-Time
-
-To authenticate with a Personal Access Token over HTTPS, run
-
-```sh
-git clone --branch part-time --single-branch https://github.com/appacademy/aa19-docker-first-containers.git
-```
-
-To authenticate with SSH, run
-
-```sh
-git clone --branch part-time --single-branch git@github.com:appacademy/aa19-docker-first-containers.git
-```
-
-When you clone a repo, the cloned repo's remote `origin` will still point to the
-original repo.
-
-To reassign the clone to your personal GitHub account (so you can `push` and
-`pull` changes), create a remote `aa19-docker-first-containers` repo at `https://github.com`.
-Then, back in your local terminal, `cd` into the cloned repo and run the
-following commands to link the cloned repo to your newly created remote and push
-up the current code (replace <YOUR-GH-USERNAME> with your actual GitHub username):
-
-```sh
-git remote set-url origin https://github.com/<YOUR-GH-USERNAME>/aa19-docker-first-containers
-git push -u origin
-```
-
- > **Note:** The first command differs from the command GitHub tells you to use
- > to connect an existing repo: you should run `git remote set-url` (as above)
- > rather than `git remote add` (as GitHub recommends).
-
- If you instead clone the project into a folder already initialized as a local
- git repo, you just need to remove the clone's remote connection to the original
- repo. `cd` into the cloned repo and run
-
- ```sh
- rm -rf .git
- ```
-
-**WARNING:** `rm -rf` is a dangerous command that will delete the specified
-directory--here, __.git__--and all of the directory's subfolders without any
-verification. **Make sure you are in the cloned repo when you run this
-command.**
+[alpine]: https://en.wikipedia.org/wiki/Alpine_Linux
+[centos]: https://en.wikipedia.org/wiki/CentOS
